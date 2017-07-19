@@ -37,12 +37,12 @@ class ActionActivity: AppCompatActivity(), ActionView {
     }
 
     override fun showSuccess() {
-        display.setTextColor(R.color.green)
+        display.setTextColor(getColor(R.color.green))
         display.setText(R.string.correct)
     }
 
     override fun showError() {
-        display.setTextColor(R.color.red)
+        display.setTextColor(getColor(R.color.red))
         display.setText(R.string.wrong)
     }
 
@@ -51,7 +51,7 @@ class ActionActivity: AppCompatActivity(), ActionView {
     }
 
     override fun updateDisplay(value: String) {
-        display.setTextColor(android.R.color.black)
+        display.setTextColor(getColor(android.R.color.black))
         display.text = value
     }
 
