@@ -28,10 +28,13 @@ import java.util.*
         } else {
             view.showError()
         }
+        inputEnabled = false
     }
 
     fun discard() {
-        inputValue = null
+        if (inputEnabled) {
+            inputValue = null
+        }
     }
 
     fun updateUiWithData(difficulty: Int, signs: ArrayList<Sign>) {
