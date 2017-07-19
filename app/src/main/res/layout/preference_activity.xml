@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/difficulty"
+            android:textColor="@android:color/black" />
+
+    <RadioGroup
+            android:id="@+id/digits"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp" >
+
+        <RadioButton
+                android:id="@+id/one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/one"
+                android:checked="true"/>
+
+        <RadioButton
+                android:id="@+id/two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/two" />
+
+        <RadioButton
+                android:id="@+id/three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/three" />
+
+        <RadioButton
+                android:id="@+id/four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/four" />
+
+        <RadioButton
+                android:id="@+id/five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/five" />
+    </RadioGroup>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signs"
+            android:textColor="@android:color/black" />
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp">
+
+        <CheckBox
+                android:id="@+id/plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plus"
+                android:checked="true"/>
+
+        <CheckBox
+                android:id="@+id/minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/minus" />
+
+        <CheckBox
+                android:id="@+id/multiply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/multiply" />
+
+        <CheckBox
+                android:id="@+id/divide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/divide" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/start" />
+</LinearLayout>

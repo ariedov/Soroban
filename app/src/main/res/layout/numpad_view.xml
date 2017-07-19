@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="?android:buttonBarStyle">
+
+        <Button
+                android:id="@+id/one"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nOne"
+                style="?android:borderlessButtonStyle" />
+        <Button
+                android:id="@+id/two"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nTwo"
+                style="?android:borderlessButtonStyle" />
+        <Button
+                android:id="@+id/three"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nThree"
+                style="?android:borderlessButtonStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="?android:buttonBarStyle">
+
+        <Button
+                android:id="@+id/four"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nFour"
+                style="?android:borderlessButtonStyle" />
+        <Button
+                android:id="@+id/five"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nFive"
+                style="?android:borderlessButtonStyle" />
+        <Button
+                android:id="@+id/six"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nSix"
+                style="?android:borderlessButtonStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="?android:buttonBarStyle">
+
+        <Button
+                android:id="@+id/seven"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nSeven"
+                style="?android:borderlessButtonStyle" />
+        <Button
+                android:id="@+id/eight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nEight"
+                style="?android:borderlessButtonStyle" />
+        <Button
+                android:id="@+id/nine"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nNine"
+                style="?android:borderlessButtonStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="?android:buttonBarStyle">
+
+        <ImageButton
+                android:id="@+id/discard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="?android:borderlessButtonStyle"
+                android:src="@drawable/ic_clear"
+                android:contentDescription="@string/discard"/>
+        <Button
+                android:id="@+id/zero"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/nZero"
+                style="?android:borderlessButtonStyle" />
+        <ImageButton
+                android:id="@+id/apply"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="?android:borderlessButtonStyle"
+                android:src="@drawable/ic_done"
+                android:contentDescription="@string/apply"/>
+    </LinearLayout>
+
+</LinearLayout>

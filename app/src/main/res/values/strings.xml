@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Soroban</string>
+    <string name="one">one</string>
+    <string name="two">two</string>
+    <string name="three">three</string>
+    <string name="four">four</string>
+    <string name="five">five</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="multiply">*</string>
+    <string name="divide">/</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="signs">Signs</string>
+    <string name="start">Start</string>
+    <string name="nOne">1</string>
+    <string name="nTwo">2</string>
+    <string name="nThree">3</string>
+    <string name="nFour">4</string>
+    <string name="nFive">5</string>
+    <string name="nSix">6</string>
+    <string name="nSeven">7</string>
+    <string name="nEight">8</string>
+    <string name="nNine">9</string>
+    <string name="nZero">0</string>
+    <string name="discard">Discard</string>
+    <string name="apply">Apply</string>
+    <string name="wrong">Wrong</string>
+    <string name="correct">Correct!</string>
+</resources>
