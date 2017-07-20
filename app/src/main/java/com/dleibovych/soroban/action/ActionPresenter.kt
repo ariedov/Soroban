@@ -1,21 +1,14 @@
 package com.dleibovych.soroban.action
 
-import android.os.Handler
-import com.dleibovych.soroban.data.Sign
 import java.util.*
 
-@ActionScope class ActionPresenter(val view: ActionView) {
+@ActionScope class ActionPresenter(val view: ActionView, val display: ActionDisplay) {
 
-    var delay = 1000L
     var inputValue: Int? = null
-    var result: Int? = null
+    var result: Int = 0
     var inputEnabled = true
 
     fun valueUpdated(value: Int) {
-        if (result == null) {
-            throw IllegalStateException("The equation is not ready yet. Run updateUiWithData")
-        }
-
         if (inputEnabled) {
             inputValue = value
             view.updateDisplay(value.toString())
@@ -29,6 +22,7 @@ import java.util.*
             view.showError()
         }
         inputEnabled = false
+        view.disableInput()
     }
 
     fun discard() {
@@ -37,35 +31,46 @@ import java.util.*
         }
     }
 
-    fun updateUiWithData(difficulty: Int, signs: ArrayList<Sign>) {
-        val rand = Random()
-        val (first, second) = when (difficulty) {
-            1 -> Pair(1 + rand.nextInt(9), 1 + rand.nextInt(9))
-            2 -> Pair(10 + rand.nextInt(90), 10 + rand.nextInt(90))
-            3 -> Pair(100 + rand.nextInt(900), 100 + rand.nextInt(900))
-            4 -> Pair(1000 + rand.nextInt(9000), 1000 + rand.nextInt(9000))
-            5 -> Pair(10_000 + rand.nextInt(90_000), 10_000 + rand.nextInt(90_000))
-            else -> throw IllegalStateException("Unexpected difficulty: ${difficulty}")
-        }
+    fun updateUiWithData(difficulty: Int, operations: Int) {
 
-        val sign = signs[rand.nextInt(signs.size)]
-        result = sign.perform(first, second)
-
-        val display = arrayOf(first.toString(), sign.getDisplay(view.getContext()), second.toString(), "" /* clean the screen after job is done */)
+        val sequence = generateSequence(difficulty, operations)
 
         inputEnabled = false
-        var currentId = 0
-        view.updateDisplay(display[currentId++])
-        val handler = Handler()
-        handler.postDelayed(object: Runnable {
-            override fun run() {
-                view.updateDisplay(display[currentId++])
-                if (currentId < display.size) {
-                    handler.postDelayed(this, delay)
-                } else {
-                    inputEnabled = true
-                }
+        view.disableInput()
+        display.processSequence(sequence, listener = object: ActionDisplay.ActionDisplayListener {
+            override fun processItem(item: String) {
+                view.updateDisplay(item)
             }
-        }, delay)
+
+            override fun finish() {
+                view.updateDisplay("")
+                inputEnabled = true
+                view.enableInput()
+            }
+        })
+    }
+
+    fun generateSequence(difficulty: Int, operations: Int): ArrayList<Int> {
+        val rand = Random()
+        result = 0
+        val sequence = ArrayList<Int>()
+        for (i in 1 .. operations) {
+            val item = randomNumber(rand, difficulty, i % 2 != 0)
+            result = result + item
+            sequence.add(item)
+        }
+        return sequence
+    }
+
+    fun randomNumber(rand: Random, difficulty: Int, positive: Boolean): Int {
+        val r = result
+        val value = when (difficulty) {
+            1 -> 1 + rand.nextInt(if (positive) 9 else r)
+            2 -> 10 + rand.nextInt(if (positive) 90 else r)
+            3 -> 100 + rand.nextInt(if (positive) 900 else r)
+            4 -> 1000 + rand.nextInt(if (positive) 9000 else r)
+            else -> throw IllegalStateException("Unexpected difficulty: ${difficulty}")
+        }
+        return value * if (positive) 1 else -1
     }
 }

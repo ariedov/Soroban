@@ -2,7 +2,8 @@ package com.dleibovych.soroban.numpad
 
 class NumpadPresenter {
 
-    var value: Int = 0
+    var value = 0
+    var inputEnabled = true
 
     fun apply(): Int {
         return value
@@ -14,8 +15,9 @@ class NumpadPresenter {
     }
 
     fun append(param: Int): Int {
-        value = value * 10 + param
+        if (inputEnabled) {
+            value = value * 10 + param
+        }
         return value
     }
-
 }

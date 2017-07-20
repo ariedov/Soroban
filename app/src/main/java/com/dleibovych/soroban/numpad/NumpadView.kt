@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import com.dleibovych.soroban.R
 import com.dleibovych.soroban.action.ActionActivity
 import kotlinx.android.synthetic.main.numpad_view.view.*
@@ -20,7 +21,7 @@ class NumpadView @JvmOverloads constructor(
     lateinit var cancelListener: () -> Unit
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.numpad_view, this, true)
+        LayoutInflater.from(context).inflate(R.layout.numpad_view, this)
 
         if (context is ActionActivity) {
             context.component.inject(this)
@@ -41,5 +42,13 @@ class NumpadView @JvmOverloads constructor(
         nine.setOnClickListener({ presenter.append(9); valueListener(presenter.value) })
         discard.setOnClickListener({ presenter.discard(); valueListener(presenter.value); cancelListener() })
         apply.setOnClickListener({ presenter.apply(); valueListener(presenter.value); submitListener() })
+    }
+
+    fun enableInput() {
+        presenter.inputEnabled = true
+    }
+
+    fun disableInput() {
+        presenter.inputEnabled = false
     }
 }

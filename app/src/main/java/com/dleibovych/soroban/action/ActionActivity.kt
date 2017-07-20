@@ -3,12 +3,12 @@ package com.dleibovych.soroban.action
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.dleibovych.soroban.R
 import com.dleibovych.soroban.action.di.ActionComponent
 import com.dleibovych.soroban.action.di.ActionModule
 import com.dleibovych.soroban.action.di.DaggerActionComponent
-import com.dleibovych.soroban.data.Sign
 import kotlinx.android.synthetic.main.action_activity.*
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class ActionActivity: AppCompatActivity(), ActionView {
     @Inject lateinit var presenter: ActionPresenter
     var component: ActionComponent = DaggerActionComponent
             .builder()
-            .actionModule(ActionModule(this))
+            .actionModule(ActionModule(this, ActionDisplay()))
             .build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,18 +32,26 @@ class ActionActivity: AppCompatActivity(), ActionView {
         numpad.cancelListener = { presenter.discard() }
 
         val difficulty = intent.getIntExtra(keyDifficulty, 1)
-        val signs = intent.getParcelableArrayListExtra<Sign>(keySigns)
-        presenter.updateUiWithData(difficulty, signs)
+        val operations = intent.getIntExtra(keyOperations, 2)
+        presenter.updateUiWithData(difficulty, operations)
     }
 
     override fun showSuccess() {
-        display.setTextColor(getColor(R.color.green))
+        display.setTextColor(ContextCompat.getColor(this, R.color.green))
         display.setText(R.string.correct)
     }
 
     override fun showError() {
-        display.setTextColor(getColor(R.color.red))
+        display.setTextColor(ContextCompat.getColor(this, R.color.red))
         display.setText(R.string.wrong)
+    }
+
+    override fun enableInput() {
+        numpad.enableInput()
+    }
+
+    override fun disableInput() {
+        numpad.disableInput()
     }
 
     override fun getContext(): Context {
@@ -51,18 +59,18 @@ class ActionActivity: AppCompatActivity(), ActionView {
     }
 
     override fun updateDisplay(value: String) {
-        display.setTextColor(getColor(android.R.color.black))
+        display.setTextColor(ContextCompat.getColor(this, android.R.color.black))
         display.text = value
     }
 
     companion object {
         private val keyDifficulty = "Difficulty"
-        private val keySigns = "Signs"
+        private val keyOperations = "Operations"
 
-        fun getIntent(context: Context, difficulty: Int, signs: ArrayList<Sign>): Intent {
+        fun getIntent(context: Context, difficulty: Int, operations: Int): Intent {
             val intent = Intent(context, ActionActivity::class.java)
             intent.putExtra(keyDifficulty, difficulty)
-            intent.putParcelableArrayListExtra(keySigns, signs)
+            intent.putExtra(keyOperations, operations)
             return intent
         }
     }

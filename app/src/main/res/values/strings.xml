@@ -5,12 +5,13 @@
     <string name="three">three</string>
     <string name="four">four</string>
     <string name="five">five</string>
+    <string name="ten">ten</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
     <string name="multiply">*</string>
     <string name="divide">/</string>
-    <string name="difficulty">Difficulty</string>
-    <string name="signs">Signs</string>
+    <string name="digits">Digits</string>
+    <string name="operations">Operations</string>
     <string name="start">Start</string>
     <string name="nOne">1</string>
     <string name="nTwo">2</string>
