@@ -16,23 +16,28 @@ import javax.inject.Inject
 class ActionActivity: AppCompatActivity(), ActionView {
 
     @Inject lateinit var presenter: ActionPresenter
-    var component: ActionComponent = DaggerActionComponent
-            .builder()
-            .actionModule(ActionModule(this, ActionDisplay()))
-            .build()
+    lateinit var component: ActionComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val difficulty = intent.getIntExtra(keyDifficulty, 1)
+        val operations = intent.getIntExtra(keyOperations, 2)
+        val delay = intent.getLongExtra(keyDelay, 1000)
+
+        component = DaggerActionComponent
+                .builder()
+                .actionModule(ActionModule(this, ActionDisplay(delay)))
+                .build()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.action_activity)
 
         component.inject(this)
+        component.inject(numpad)
 
         numpad.valueListener = { presenter.updateValue(it) }
         numpad.submitListener = { presenter.apply() }
         numpad.cancelListener = { presenter.discard() }
 
-        val difficulty = intent.getIntExtra(keyDifficulty, 1)
-        val operations = intent.getIntExtra(keyOperations, 2)
         presenter.updateUiWithData(difficulty, operations)
     }
 
@@ -66,11 +71,13 @@ class ActionActivity: AppCompatActivity(), ActionView {
     companion object {
         private val keyDifficulty = "Difficulty"
         private val keyOperations = "Operations"
+        private val keyDelay = "Delay"
 
-        fun getIntent(context: Context, difficulty: Int, operations: Int): Intent {
+        fun getIntent(context: Context, difficulty: Int, operations: Int, delay: Long): Intent {
             val intent = Intent(context, ActionActivity::class.java)
             intent.putExtra(keyDifficulty, difficulty)
             intent.putExtra(keyOperations, operations)
+            intent.putExtra(keyDelay, delay)
             return intent
         }
     }

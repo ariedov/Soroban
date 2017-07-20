@@ -3,7 +3,7 @@ package com.dleibovych.soroban.action
 import android.os.Handler
 import android.os.Message
 
-@ActionScope class ActionDisplay(val delay: Long = 1000L) {
+@ActionScope class ActionDisplay(val delay: Long) {
 
     fun processSequence(sequence: ArrayList<Int>, listener: ActionDisplayListener) {
         TimerHandler(sequence, delay, listener).sendEmptyMessage(0)

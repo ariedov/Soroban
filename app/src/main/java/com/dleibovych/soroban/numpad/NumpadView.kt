@@ -22,10 +22,6 @@ class NumpadView @JvmOverloads constructor(
 
     init {
         LayoutInflater.from(context).inflate(R.layout.numpad_view, this)
-
-        if (context is ActionActivity) {
-            context.component.inject(this)
-        }
     }
 
     override fun onAttachedToWindow() {

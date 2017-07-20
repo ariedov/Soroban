@@ -2,23 +2,38 @@ package com.dleibovych.soroban.preference
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.SeekBar
 import com.dleibovych.soroban.R
 import com.dleibovych.soroban.preference.di.DaggerPreferenceComponent
 import com.dleibovych.soroban.preference.di.PreferenceComponent
+import com.dleibovych.soroban.preference.di.PreferenceModule
 import kotlinx.android.synthetic.main.preference_activity.*
 import javax.inject.Inject
 
-class PreferenceActivity: AppCompatActivity() {
+class PreferenceActivity: AppCompatActivity(), PreferenceView {
 
     @Inject lateinit var presenter: PreferencePresenter
 
-    val component: PreferenceComponent = DaggerPreferenceComponent.create()
+    val component: PreferenceComponent = DaggerPreferenceComponent
+            .builder()
+            .preferenceModule(PreferenceModule(this))
+            .build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preference_activity)
 
         component.inject(this)
+
+        presenter.applyDelay(this, delay.progress)
+        delay.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+
+            override fun onProgressChanged(bar: SeekBar?, progress: Int, fromUser: Boolean) {
+                presenter.applyDelay(this@PreferenceActivity, progress)
+            }
+        })
 
         start.setOnClickListener {
             val digitsId = digits.checkedRadioButtonId
@@ -40,7 +55,12 @@ class PreferenceActivity: AppCompatActivity() {
                 else -> throw IllegalStateException("Unknown operation count")
             }
 
-            presenter.moveToAction(this, difficulty, operations)
+            val delay = delay.progress.toLong()
+            presenter.moveToAction(this, difficulty, operations, delay)
         }
+    }
+
+    override fun displayProgress(progress: String) {
+        delayDisplay.text = progress
     }
 }
