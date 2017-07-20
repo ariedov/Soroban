@@ -1,6 +1,7 @@
 package com.dleibovych.soroban.action
 
 import java.util.*
+import kotlin.collections.ArrayList
 
 @ActionScope class ActionPresenter(val view: ActionView, val display: ActionDisplay) {
 
@@ -8,7 +9,7 @@ import java.util.*
     var result: Int = 0
     var inputEnabled = true
 
-    fun valueUpdated(value: Int) {
+    fun updateValue(value: Int) {
         if (inputEnabled) {
             inputValue = value
             view.updateDisplay(value.toString())
@@ -33,7 +34,8 @@ import java.util.*
 
     fun updateUiWithData(difficulty: Int, operations: Int) {
 
-        val sequence = generateSequence(difficulty, operations)
+        val (result, sequence) = generateSequence(difficulty, operations)
+        this.result = result
 
         inputEnabled = false
         view.disableInput()
@@ -50,25 +52,24 @@ import java.util.*
         })
     }
 
-    fun generateSequence(difficulty: Int, operations: Int): ArrayList<Int> {
+    fun generateSequence(difficulty: Int, operations: Int): Pair<Int, ArrayList<Int>> {
         val rand = Random()
-        result = 0
         val sequence = ArrayList<Int>()
+        var result = 0
         for (i in 1 .. operations) {
-            val item = randomNumber(rand, difficulty, i % 2 != 0)
-            result = result + item
+            val item = randomNumber(rand, difficulty, i % 2 != 0, result)
+            result += item
             sequence.add(item)
         }
-        return sequence
+        return Pair(result, sequence)
     }
 
-    fun randomNumber(rand: Random, difficulty: Int, positive: Boolean): Int {
-        val r = result
+    fun randomNumber(rand: Random, difficulty: Int, positive: Boolean, result: Int): Int {
         val value = when (difficulty) {
-            1 -> 1 + rand.nextInt(if (positive) 9 else r)
-            2 -> 10 + rand.nextInt(if (positive) 90 else r)
-            3 -> 100 + rand.nextInt(if (positive) 900 else r)
-            4 -> 1000 + rand.nextInt(if (positive) 9000 else r)
+            1 -> 1 + rand.nextInt(if (positive) 9 else result)
+            2 -> 10 + rand.nextInt(if (positive) 90 else result)
+            3 -> 100 + rand.nextInt(if (positive) 900 else result)
+            4 -> 1000 + rand.nextInt(if (positive) 9000 else result)
             else -> throw IllegalStateException("Unexpected difficulty: ${difficulty}")
         }
         return value * if (positive) 1 else -1

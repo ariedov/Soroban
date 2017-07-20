@@ -27,7 +27,7 @@ class ActionActivity: AppCompatActivity(), ActionView {
 
         component.inject(this)
 
-        numpad.valueListener = { presenter.valueUpdated(it) }
+        numpad.valueListener = { presenter.updateValue(it) }
         numpad.submitListener = { presenter.apply() }
         numpad.cancelListener = { presenter.discard() }
 
