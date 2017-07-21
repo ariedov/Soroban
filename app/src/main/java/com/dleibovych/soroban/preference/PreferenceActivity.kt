@@ -55,7 +55,7 @@ class PreferenceActivity: AppCompatActivity(), PreferenceView {
                 else -> throw IllegalStateException("Unknown operation count")
             }
 
-            val delay = delay.progress.toLong()
+            val delay = presenter.getDelayFromLevel(delay.progress).toLong()
             presenter.moveToAction(this, difficulty, operations, delay)
         }
     }
