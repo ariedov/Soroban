@@ -5,7 +5,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="15dp">
-
     <TextView
             android:id="@+id/display"
             android:layout_width="wrap_content"
@@ -23,4 +22,10 @@
             android:layout_height="250dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true" />
+
+    <com.dleibovych.soroban.action.countdown.CountdownView
+            android:id="@+id/countdown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
 </RelativeLayout>

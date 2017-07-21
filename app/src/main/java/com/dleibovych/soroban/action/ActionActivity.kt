@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.dleibovych.soroban.R
+import com.dleibovych.soroban.action.countdown.di.CountdownModule
 import com.dleibovych.soroban.action.di.ActionComponent
 import com.dleibovych.soroban.action.di.ActionModule
 import com.dleibovych.soroban.action.di.DaggerActionComponent
@@ -19,26 +21,34 @@ class ActionActivity: AppCompatActivity(), ActionView {
     lateinit var component: ActionComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val difficulty = intent.getIntExtra(keyDifficulty, 1)
-        val operations = intent.getIntExtra(keyOperations, 2)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.action_activity)
+
         val delay = intent.getLongExtra(keyDelay, 1000)
 
         component = DaggerActionComponent
                 .builder()
                 .actionModule(ActionModule(this, ActionDisplay(delay)))
+                .countdownModule(CountdownModule(countdown))
                 .build()
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.action_activity)
 
         component.inject(this)
         component.inject(numpad)
+        component.inject(countdown)
 
         numpad.valueListener = { presenter.updateValue(it) }
         numpad.submitListener = { presenter.apply() }
         numpad.cancelListener = { presenter.discard() }
 
-        presenter.updateUiWithData(difficulty, operations)
+    }
+
+    override fun startGame() {
+        countdown.visibility = View.GONE
+
+        val difficulty = intent.getIntExtra(keyDifficulty, 1)
+        val operations = intent.getIntExtra(keyOperations, 2)
+
+        presenter.startExcercise(difficulty, operations)
     }
 
     override fun showSuccess() {

@@ -1,9 +1,10 @@
 package com.dleibovych.soroban.action
 
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-@ActionScope class ActionPresenter(val view: ActionView, val display: ActionDisplay) {
+@ActionScope class ActionPresenter @Inject constructor(val view: ActionView, val display: ActionDisplay) {
 
     var inputValue: Int? = null
     var result: Int = 0
@@ -32,7 +33,7 @@ import kotlin.collections.ArrayList
         }
     }
 
-    fun updateUiWithData(difficulty: Int, operations: Int) {
+    fun startExcercise(difficulty: Int, operations: Int) {
 
         val (result, sequence) = generateSequence(difficulty, operations)
         this.result = result

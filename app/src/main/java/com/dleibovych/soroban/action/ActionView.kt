@@ -4,6 +4,7 @@ import android.content.Context
 
 interface ActionView {
 
+    fun startGame()
     fun updateDisplay(value: String)
     fun showSuccess()
     fun showError()
